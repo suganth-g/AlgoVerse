@@ -5,11 +5,13 @@ import { ToastProvider } from './components/ui/Toast';
 // Layouts
 import DashboardLayout from './components/layout/DashboardLayout';
 import AuthLayout from './components/layout/AuthLayout';
+import ProtectedRoute from './components/layout/ProtectedRoute';
 
 // Pages
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import ForgotPassword from './pages/ForgotPassword';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import ProblemList from './pages/ProblemList';
@@ -17,6 +19,7 @@ import ProblemDetail from './pages/ProblemDetail';
 import CodeEditor from './pages/CodeEditor';
 import Visualizer from './pages/Visualizer';
 import TopicLearning from './pages/TopicLearning';
+import TopicDetail from './pages/TopicDetail';
 import Notes from './pages/Notes';
 import Contest from './pages/Contest';
 import Leaderboard from './pages/Leaderboard';
@@ -41,10 +44,12 @@ export default function App() {
             <Route element={<AuthLayout />}>
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
             </Route>
 
-            {/* Dashboard Routes */}
-            <Route element={<DashboardLayout />}>
+            {/* Dashboard Routes (Protected) */}
+            <Route element={<ProtectedRoute />}>
+              <Route element={<DashboardLayout />}>
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/problems" element={<ProblemList />} />
@@ -52,6 +57,7 @@ export default function App() {
               <Route path="/editor" element={<CodeEditor />} />
               <Route path="/visualizer" element={<Visualizer />} />
               <Route path="/learn" element={<TopicLearning />} />
+              <Route path="/learn/:id" element={<TopicDetail />} />
               <Route path="/notes" element={<Notes />} />
               <Route path="/contest" element={<Contest />} />
               <Route path="/leaderboard" element={<Leaderboard />} />
@@ -60,7 +66,8 @@ export default function App() {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/notifications" element={<NotificationCenter />} />
               <Route path="/bookmarks" element={<Bookmarks />} />
-              <Route path="/ai-assistant" element={<AIAssistant />} />
+                <Route path="/ai-assistant" element={<AIAssistant />} />
+              </Route>
             </Route>
 
             {/* 404 Route */}

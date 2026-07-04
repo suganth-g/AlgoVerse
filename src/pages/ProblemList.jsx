@@ -20,6 +20,17 @@ const problems = [
 
 export default function ProblemList() {
   const [activeTab, setActiveTab] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredProblems = problems.filter(problem => {
+    const matchesSearch = problem.title.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesTab = activeTab === 'all' || 
+                      (activeTab === 'algorithms' && (problem.tags.includes('Array') || problem.tags.includes('String') || problem.tags.includes('Math'))) ||
+                      (activeTab === 'database' && problem.tags.includes('Database')) ||
+                      (activeTab === 'shell' && problem.tags.includes('Shell')) ||
+                      (activeTab === 'concurrency' && problem.tags.includes('Concurrency'));
+    return matchesSearch && matchesTab;
+  });
 
   return (
     <div className="animate-fade-in">
@@ -33,7 +44,11 @@ export default function ProblemList() {
 
       <div className="flex flex-col lg:flex-row gap-6 mb-8">
         <div className="flex-1">
-          <SearchBar placeholder="Search problems..." className="w-full" />
+          <SearchBar 
+            placeholder="Search problems..." 
+            className="w-full" 
+            onSearch={(val) => setSearchQuery(val)}
+          />
         </div>
         <div className="flex items-center gap-3 overflow-x-auto hide-scrollbar">
           <Button variant="secondary" icon={Filter}>Filters</Button>
@@ -50,18 +65,18 @@ export default function ProblemList() {
       </div>
 
       <div className="flex gap-4 border-b border-white/10 mb-6">
-        {['All Problems', 'Algorithms', 'Database', 'Shell', 'Concurrency'].map((tab, i) => (
+        {['All', 'Algorithms', 'Database', 'Shell', 'Concurrency'].map((tab, i) => (
           <button 
             key={tab}
             onClick={() => setActiveTab(tab.toLowerCase())}
             className={`pb-3 text-sm font-medium transition-all relative ${
-              (activeTab === tab.toLowerCase() || (activeTab === 'all' && i === 0))
+              activeTab === tab.toLowerCase()
                 ? 'text-white' 
                 : 'text-gray-400 hover:text-gray-200'
             }`}
           >
             {tab}
-            {(activeTab === tab.toLowerCase() || (activeTab === 'all' && i === 0)) && (
+            {activeTab === tab.toLowerCase() && (
               <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full" />
             )}
           </button>
@@ -69,9 +84,15 @@ export default function ProblemList() {
       </div>
 
       <div className="space-y-3">
-        {problems.map(problem => (
-          <ProblemCard key={problem.id} {...problem} />
-        ))}
+        {filteredProblems.length > 0 ? (
+          filteredProblems.map(problem => (
+            <ProblemCard key={problem.id} {...problem} />
+          ))
+        ) : (
+          <div className="text-center py-12 text-gray-400">
+            No problems found matching your criteria.
+          </div>
+        )}
       </div>
 
       <div className="flex justify-center mt-8 gap-2">

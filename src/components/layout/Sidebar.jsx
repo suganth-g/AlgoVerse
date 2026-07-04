@@ -17,7 +17,7 @@ const navItems = [
   { id: 'progress', label: 'Progress', icon: TrendingUp, path: '/progress' },
   { id: 'bookmarks', label: 'Bookmarks', icon: Star, path: '/bookmarks' },
   { id: 'notes', label: 'Notes', icon: StickyNote, path: '/notes' },
-  { id: 'ai', label: 'AI Assistant', icon: Bot, path: '/ai' },
+  { id: 'ai', label: 'AI Assistant', icon: Bot, path: '/ai-assistant' },
 ];
 
 const bottomItems = [

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { CheckCircle2, Target, Zap, Trophy, Play } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer } from 'recharts';
 import PageHeader from '../components/layout/PageHeader';
@@ -72,7 +73,7 @@ export default function Dashboard() {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-white">Recommended for You</h3>
-              <button className="text-sm text-purple-400 hover:text-purple-300">View All</button>
+              <Link to="/problems" className="text-sm text-purple-400 hover:text-purple-300">View All</Link>
             </div>
             <div className="space-y-3">
               <ProblemCard id="1" title="Two Sum" difficulty="Easy" acceptance={48.2} tags={['Array', 'Hash Table']} status="attempted" />

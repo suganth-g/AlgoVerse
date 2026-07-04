@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { 
   Box, Hash, ListTree, GitCommit, Network, 
   Layers, Shuffle, Calculator, Database 
@@ -21,6 +22,8 @@ const topics = [
 ];
 
 export default function TopicLearning() {
+  const navigate = useNavigate();
+
   return (
     <div className="animate-fade-in max-w-7xl mx-auto">
       <PageHeader 
@@ -50,12 +53,12 @@ export default function TopicLearning() {
         </div>
       </GlassCard>
 
-      {/* Topic Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {topics.map(topic => (
           <TopicCard 
             key={topic.id}
             {...topic}
+            onClick={() => navigate(`/learn/${topic.id}`)}
           />
         ))}
       </div>
